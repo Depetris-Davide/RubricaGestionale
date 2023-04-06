@@ -3,8 +3,13 @@ package rubricagestionale;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import javax.swing.*;
 
 public class AddContactPanel extends JPanel {
@@ -86,6 +91,34 @@ public class AddContactPanel extends JPanel {
                     FileWriter fileout = new FileWriter("directory.txt", true);
                     fileout.write(nameIn.getText() + ";" + surnameIn.getText() + ";" + telephoneIn.getText() + "\n");
                     fileout.close();
+
+                    LinkedList<String> lines = new LinkedList<String>();
+
+                    try ( BufferedReader reader = new BufferedReader(new FileReader("directory.txt"))) {
+                        String line;
+
+                        while ((line = reader.readLine()) != null) {
+                            lines.add(line);
+                        }
+
+                    }
+
+                    Collections.sort(lines, new Comparator<String>() {
+                        public int compare(String o1, String o2) {
+                            String name1 = o1.split(";")[0];
+
+                            String name2 = o2.split(";")[0];
+
+                            return name1.compareTo(name2);
+                        }
+
+                    });
+
+                    try ( FileWriter writer = new FileWriter("directory.txt")) {
+                        for (String line : lines) {
+                            writer.write(line + "\n");
+                        }
+                    }
 
                     nameIn.setText("");
 

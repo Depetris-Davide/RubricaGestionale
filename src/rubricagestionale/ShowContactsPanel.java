@@ -27,7 +27,7 @@ public class ShowContactsPanel extends JPanel {
 
     private String n, c, t;
 
-    private int i;
+    private int i, iC;
 
     private final JScrollPane scrollPane;
 
@@ -60,6 +60,9 @@ public class ShowContactsPanel extends JPanel {
         fileinb = new BufferedReader(new FileReader("directory.txt"));
 
         do {
+            if (iC == 3) {
+                iC = 0;
+            }
             s = fileinb.readLine();
             if (s != null) {
                 st = new StringTokenizer(s, ";");
@@ -67,9 +70,9 @@ public class ShowContactsPanel extends JPanel {
                 c = st.nextToken();
                 t = st.nextToken();
 
-                contact = new JLabel("<html>Contatto " + (i + 1) + ":<br>Nome: " + n + "<br>Cognome: " + c + "<br>Telefono: " + t + "</html>");
+                contact = new JLabel("<html>Contact " + (i + 1) + ":<br>Name: " + n + "<br>Surname: " + c + "<br>Telephone: " + t + "</html>");
                 contact.setFont(new Font("Georgia", Font.PLAIN, 15));
-                switch ((int) (Math.random() * 3)) {
+                switch (iC) {
                     case 0:
                         contact.setBackground(new Color(254, 74, 73));
                         break;
@@ -89,12 +92,14 @@ public class ShowContactsPanel extends JPanel {
                 buttonPanel.add(Box.createVerticalStrut(10));
 
                 i++;
+                iC++;
             }
         } while (s != null);
 
         buttonPanel.setPreferredSize(new Dimension(340, i * 110));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setViewportView(buttonPanel);
         scrollPane.setVisible(true);
         this.add(scrollPane);

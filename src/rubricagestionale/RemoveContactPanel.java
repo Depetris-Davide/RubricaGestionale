@@ -67,7 +67,7 @@ public class RemoveContactPanel extends JPanel {
 
                 String lineToRemove = n + ";" + c + ";" + t;
 
-                contact = new JButton("<html>Rimuovi Numero " + t + ":<br>" + n + " " + c + "</html>");
+                contact = new JButton("<html>Remove number " + t + ":<br>" + n + " " + c + "</html>");
                 contact.setFont(new Font("Georgia", Font.PLAIN, 15));
                 contact.setAlignmentX(Component.CENTER_ALIGNMENT);
                 contact.setFocusPainted(false);
@@ -81,7 +81,6 @@ public class RemoveContactPanel extends JPanel {
                             do {
                                 s = filein.readLine();
                                 if (s != null) {
-                                    System.out.println(s + " " + lineToRemove);
                                     if (!s.equals(lineToRemove)) {
                                         newS += s + "\n";
                                     }
@@ -120,6 +119,7 @@ public class RemoveContactPanel extends JPanel {
         buttonPanel.setPreferredSize(new Dimension(340, i * 60));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setViewportView(buttonPanel);
         scrollPane.setVisible(true);
         this.add(scrollPane);
